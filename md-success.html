@@ -1,0 +1,145 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../elliptical-polymer-behaviors/animation-behavior.html">
+<link rel="import" href="md-success-form.html">
+<link rel="import" href="md-success-result.html">
+
+<!--
+`md-success`
+
+
+@demo demo/index.html
+-->
+
+<dom-module id="md-success">
+  <template>
+    <figure class="chart" id="chart">
+      <iron-icon icon="done" id="icon"></iron-icon>
+      <svg role="img" xmlns="http://www.w3.org/2000/svg">
+        <circle class="circle-background"/>
+        <circle class="circle-foreground"/>
+      </svg>
+    </figure>
+    <content select="md-success-result"></content>
+    <content select="md-success-form"></content>
+  </template>
+    <style>
+      :host{
+        display:block;
+        min-height:var(--md-success-min-height,0);
+      }
+      :host figure{
+        position:relative;
+        margin:0 auto;
+        display:none;
+      }
+      :host figure iron-icon{
+        position:absolute;
+        top:15%;
+        left:15%;
+        height:64px;
+        width:64px;
+        color:var(--md-success-foreground-color,#1ca81d);
+        z-index:10;
+        opacity:0;
+        transition: all 1s ease-in-out;
+      }
+      :host figure iron-icon.show{
+        opacity:1;
+      }
+      :host .chart {
+        width: 100px;
+        height: 100px;
+        position: relative; }
+      :host .chart.animate{
+        display:block;
+      }
+      :host .chart.animate svg .circle-foreground {
+        animation: offset 1s ease-in-out forwards;
+        animation-delay: 1s; }
+      :host .chart svg {
+        width: 100%;
+        height: 100%; }
+      :host .chart svg .circle-background, .chart svg .circle-foreground {
+        r: 48.5px;
+        cx: 50%;
+        cy: 50%;
+        fill: none;
+        stroke:var(--md-success-background-color,#fff);
+        stroke-width: 3px; }
+      :host .chart svg .circle-foreground {
+        stroke: var(--md-success-foreground-color,#1ca81d);;
+        stroke-dasharray: 304.58px 304.58px;
+        stroke-dashoffset: 304.58px;
+        transform-origin: 50% 50%;
+        transform: rotate(-90deg); }
+
+      @keyframes offset {
+        100% {
+          stroke-dashoffset: 0; } }
+    </style>
+
+  <script>
+    Polymer({
+
+      is: 'md-success',
+      behaviors:[Elliptical.AnimationBehavior],
+
+      properties: {
+         _successResult:{
+           type:Object,
+           value:null
+         },
+        _successForm:{
+          type:Object,
+          value:null
+        }
+      },
+
+      ready:function(){
+          this._setTimeline();
+      },
+
+      _onComplete:function(){
+        var chart=this.$.chart;
+        chart.classList.add('animate');
+      },
+
+      _showResult:function(){
+        var form=this._successForm;
+        form.style.display='none';
+        var result=this._successResult;
+        var chart=this.$.chart;
+        chart.style.display='block';
+        result.style.opacity=0;
+        result.style.display='block';
+      },
+
+      transition:function(){
+        var onComplete=this._onComplete.bind(this);
+        var showResult=this._showResult.bind(this);
+        var tl=this._tl;
+        var form=this.querySelector('md-success-form');
+        var result=this.querySelector('md-success-result');
+        this._successForm=form;
+        this._successResult=result;
+        var icon=this.$.icon;
+        tl.to(form, 1, {
+          opacity: 0,
+          height:0,
+          ease: Power2.easeOut,
+          onComplete:showResult
+        })
+                .to(result,.5,{
+                  opacity:1,
+                  ease:Power2.easeIn,
+                  onComplete:onComplete
+                })
+                .to(icon,.5,{
+                  opacity:1,
+                  ease:Power2.easeIn
+                })
+      }
+
+    });
+  </script>
+</dom-module>

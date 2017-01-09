@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>md-success demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../md-success.html">
+    <link rel="import" href="../../paper-button/paper-button.html">
+    <link rel="import" href="../../paper-input/paper-input.html">
+    <style is="custom-style" include="demo-pages-shared-styles">
+    </style>
+    <style>
+      paper-button.submit{
+        background:#2196F3;
+        color:#fff;
+        margin-top:1em;
+      }
+      .center{
+        display:flex;
+        justify-content:center;
+      }
+      .space-around{
+        display:flex;
+        justify-content: space-around;
+      }
+      .margin-top{
+        margin-top:1em;
+      }
+      .grey{
+        color:#BDBDBD;
+      }
+    </style>
+    <style is="custom-style">
+      md-success{
+        --md-success-min-height:180px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="vertical-section-container centered">
+      <h3>Basic md-success demo</h3>
+      <demo-snippet>
+        <template>
+          <h3>Submit Payment</h3>
+          <md-success>
+            <md-success-result>
+              <div class="space-around">
+                <paper-button>Continue</paper-button>
+                <paper-button>Profile</paper-button>
+              </div>
+              <div class="center margin-top">
+                <span class="grey">Payment successfully sent</span>
+              </div>
+            </md-success-result>
+            <md-success-form>
+              <paper-input label="Name"></paper-input>
+              <paper-input label="Amount"></paper-input>
+              <paper-input label="Send To"></paper-input>
+              <paper-input label="Message"></paper-input>
+              <div class="center">
+                <paper-button raised class="submit">Submit</paper-button>
+              </div>
+            </md-success-form>
+          </md-success>
+        </template>
+      </demo-snippet>
+    </div>
+  <script>
+    document.addEventListener('WebComponentsReady',onReady);
+    function onReady(event){
+      var button=document.querySelector('.submit');
+      button.addEventListener('click',onSubmit);
+    }
+    function onSubmit(event){
+      var success=document.querySelector('md-success');
+      success.transition();
+    }
+
+  </script>
+  </body>
+</html>
