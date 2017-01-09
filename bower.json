@@ -3,15 +3,16 @@
   "main": "md-success.html",
   "version": "1.0.0",
   "authors": [
-    ""
+    "S. Francis"
   ],
-  "description": "",
+  "description": "Success content display component",
   "keywords": [
     "web-component",
-    "polymer"
+    "polymer",
+    "success"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/",
+  "homepage": "https://github.com/EllipticalElements/md-success",
   "ignore": [
     "/.*",
     "/test/",
